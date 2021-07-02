@@ -1,0 +1,10 @@
+syntax = "proto3";
+package apipb;
+
+option go_package = "pkg/apipb";
+
+message PAXMessage {
+    uint32 bluetooth_device_count = 1;
+    
+    uint32 wifi_device_count = 2;
+};
