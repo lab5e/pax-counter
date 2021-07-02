@@ -18,5 +18,5 @@
 * U4    LM1117	SOT-223
 * [1555CF22GY](https://www.digikey.no/products/no?keywords=1555cf22) enclosure
 
-![Eagle board](https://github.com/lab5e/pax-counter/blob/master/imagesip67_version.png)
+![Eagle board](https://github.com/lab5e/pax-counter/blob/master/images/ip67_version.png)
 
