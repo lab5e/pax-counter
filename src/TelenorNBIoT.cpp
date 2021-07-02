@@ -17,6 +17,7 @@
 #include "func.h"
 #include "TelenorNBIoT.h"
 #include <Udp.h>
+#include "protobuffer.h"
 
 #define PREFIX "AT+"
 #define POSTFIX "\r"
@@ -703,14 +704,16 @@ void nbiot_setup()
 }
 
 
-char txBuf[64];
+constexpr int PROTOBUF_MAX_LENGTH = 256;
+uint8_t proto_buffer[PROTOBUF_MAX_LENGTH];
 
 void nbiot_transmit_message(int bt_devices, int wifi_devices)
 {
     if (nbiot.isConnected()) 
     {
-        sprintf(txBuf, "bt:%d,wifi:%d", bt_devices, wifi_devices);
-        if (true == nbiot.sendString(remoteIP, REMOTE_PORT, txBuf)) 
+        int encodedLength = EncodeProtoBuf(bt_devices, wifi_devices, proto_buffer, PROTOBUF_MAX_LENGTH);
+
+        if (true == nbiot.sendBytes(remoteIP, REMOTE_PORT, (const char*)proto_buffer, encodedLength)) 
         {
             Serial.println("Successfully sent data");
         } 

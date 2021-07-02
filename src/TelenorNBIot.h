@@ -44,11 +44,11 @@ class TelenorNBIoT
 
     /**
      * Create a new TelenorNBIoT instance. Default apn is the Telenor NB-IoT
-     * Developer Portal, "mda.ee", but can be overridden. Use a blank string
+     * Developer Portal, "lab5e.ee", but can be overridden. Use a blank string
      * to get the network default APN. If you specify mobile country code
      * and mobile network code the device will register on the network faster.
      */
-    TelenorNBIoT(String accessPointName = "mda.ee", uint16_t mobileCountryCode = 0, uint16_t mobileNetworkCode = 0);
+    TelenorNBIoT(String accessPointName = "lab5e.ee", uint16_t mobileCountryCode = 0, uint16_t mobileNetworkCode = 0);
 
     /**
      * Initialize the module with the specified baud rate. The default is 9600.
