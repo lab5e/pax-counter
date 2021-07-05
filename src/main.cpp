@@ -21,6 +21,7 @@ void loop()
   {
     wifi_scan();
     ble_scan();
+    nbiot_status();
     nbiot_transmit_message(pool.get_count(BT), pool.get_count(WIFI));
     pool.Purge();
     pool.Log();

@@ -40,6 +40,7 @@
 #define ACTIVATE_APN "CGACT=1,%d"
 #define CONFIG_AUTOCONN "NCONFIG=\"AUTOCONNECT\",\"%s\""
 #define DEFAULT_TIMEOUT 2000
+#define CGPADDR "CGPADDR"
 
 int splitFields(char *line, char **fields, uint8_t maxFields);
 bool retry(uint8_t attempts, nonstd::function<bool ()> fn, uint16_t delayBetween = 100);
@@ -49,6 +50,8 @@ TelenorNBIoT::TelenorNBIoT(String accessPointName, uint16_t mobileCountryCode, u
     _socket = -1;
     memset(_imei, 0, 16);
     memset(_imsi, 0, 16);
+    memset(_address, 0, 16);
+
 
     mcc = mobileCountryCode;
     mnc = mobileNetworkCode;
@@ -253,6 +256,30 @@ String TelenorNBIoT::imsi()
     }
     return String(_imsi);
 }
+
+String TelenorNBIoT::address()
+{
+    if (strnlen(_address, sizeof _address) != 15)
+    {
+        retry(10, [this]() {
+            writeCommand(CGPADDR);
+            if (readCommand(lines) == 2 && isOK(lines[1]))
+            {
+                int prefix_length = 13;
+                if (strlen(lines[0]) > prefix_length)
+                {
+                    int addr_length = strlen(&lines[0][prefix_length]) +1;
+                    lines[0][strlen(lines[0])-1] = 0;
+                    memcpy(_address, &lines[0][prefix_length], addr_length);
+                    return true;
+                }
+            }
+            return false;
+        });
+    }
+    return String(_address);
+}
+
 
 bool TelenorNBIoT::createSocket(const uint16_t listenPort)
 {
@@ -686,7 +713,7 @@ int REMOTE_PORT = 1234;
 void nbiot_setup()
 {
   Serial2.begin(9600);
-  while (!nbiot.begin(Serial2, true)) {
+  while (!nbiot.begin(Serial2, false)) {
     Serial.println("Begin failed. Retrying...");
     delay(1000);
   }
@@ -728,5 +755,15 @@ void nbiot_transmit_message(int bt_devices, int wifi_devices)
         Serial.println("Connecting...");
         delay(5000);
     }
+}
+
+void nbiot_status()
+{
+    Serial.print("IMSI: ");
+    Serial.println(nbiot.imsi());
+    Serial.print("IMEI: ");
+    Serial.println(nbiot.imei());
+    Serial.print("IP  : ");
+    Serial.println(nbiot.address());
 }
 

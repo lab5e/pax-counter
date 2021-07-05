@@ -29,6 +29,7 @@
 
 void nbiot_setup();
 void nbiot_transmit_message(int bt_devices, int wifi_devices);
+void nbiot_status();
 
 /**
  * User-friendly interface to the SARA N2 module from ublox
@@ -48,7 +49,7 @@ class TelenorNBIoT
      * to get the network default APN. If you specify mobile country code
      * and mobile network code the device will register on the network faster.
      */
-    TelenorNBIoT(String accessPointName = "lab5e.ee", uint16_t mobileCountryCode = 0, uint16_t mobileNetworkCode = 0);
+    TelenorNBIoT(String accessPointName = "mda.lab5e", uint16_t mobileCountryCode = 0, uint16_t mobileNetworkCode = 0);
 
     /**
      * Initialize the module with the specified baud rate. The default is 9600.
@@ -92,6 +93,9 @@ class TelenorNBIoT
      * Get the IMSI for the SIM chip attached to the module.
      */
     String imsi();
+
+    String address();
+
 
     /**
      * Create a new socket. Call this before attempting to send or receive data
@@ -185,6 +189,7 @@ class TelenorNBIoT
     int16_t _socket;
     char _imei[16];
     char _imsi[16];
+    char _address[16];
     uint16_t mcc;
     uint16_t mnc;
     char apn[30];
