@@ -25,6 +25,8 @@ void setup()
   Serial.begin(115200);
  }
 
+uint32_t seconds_uptime = 0;
+uint sequence_number = 0;
 void loop() 
 {
   unsigned long boot_time_start, boot_time_end, transmit_time_start, transmit_time_end;
@@ -47,7 +49,13 @@ void loop()
       {
         Serial.println("----- Transmitting -----");
         nbiot_status();
-        nbiot_transmit_message(pool.get_count(BT), pool.get_count(WIFI), core_temperature);
+        sequence_number++;
+        int uptime_s = boot_time_end / 1000;
+        Serial.print("Uptime:");
+        Serial.println(uptime_s);
+        Serial.print("Sequence number:");
+        Serial.println(sequence_number);
+        nbiot_transmit_message(pool.get_count(BT), pool.get_count(WIFI), core_temperature, sequence_number, uptime_s);
         pool.Purge();
         Serial.println("----- Log purged -----");
         break;

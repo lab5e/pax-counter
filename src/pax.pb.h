@@ -18,23 +18,29 @@ typedef struct _apipb_PAXMessage {
     uint32_t bluetooth_device_count;
     uint32_t wifi_device_count;
     float core_temperature;
+    uint32_t sequence_number;
+    uint32_t seconds_uptime;
 } apipb_PAXMessage;
 
 
 /* Initializer values for message structs */
-#define apipb_PAXMessage_init_default            {0, 0, 0}
-#define apipb_PAXMessage_init_zero               {0, 0, 0}
+#define apipb_PAXMessage_init_default            {0, 0, 0, 0, 0}
+#define apipb_PAXMessage_init_zero               {0, 0, 0, 0, 0}
 
 /* Field tags (for use in manual encoding/decoding) */
 #define apipb_PAXMessage_bluetooth_device_count_tag 1
 #define apipb_PAXMessage_wifi_device_count_tag   2
 #define apipb_PAXMessage_core_temperature_tag    3
+#define apipb_PAXMessage_sequence_number_tag     4
+#define apipb_PAXMessage_seconds_uptime_tag      5
 
 /* Struct field encoding specification for nanopb */
 #define apipb_PAXMessage_FIELDLIST(X, a) \
 X(a, STATIC,   SINGULAR, UINT32,   bluetooth_device_count,   1) \
 X(a, STATIC,   SINGULAR, UINT32,   wifi_device_count,   2) \
-X(a, STATIC,   SINGULAR, FLOAT,    core_temperature,   3)
+X(a, STATIC,   SINGULAR, FLOAT,    core_temperature,   3) \
+X(a, STATIC,   SINGULAR, UINT32,   sequence_number,   4) \
+X(a, STATIC,   SINGULAR, UINT32,   seconds_uptime,    5)
 #define apipb_PAXMessage_CALLBACK NULL
 #define apipb_PAXMessage_DEFAULT NULL
 
@@ -44,7 +50,7 @@ extern const pb_msgdesc_t apipb_PAXMessage_msg;
 #define apipb_PAXMessage_fields &apipb_PAXMessage_msg
 
 /* Maximum encoded size of messages (where known) */
-#define apipb_PAXMessage_size                    17
+#define apipb_PAXMessage_size                    29
 
 #ifdef __cplusplus
 } /* extern "C" */

@@ -28,7 +28,7 @@
 #define MAXLINES 5
 
 void nbiot_setup();
-void nbiot_transmit_message(int bt_devices, int wifi_devices, float core_temperature);
+void nbiot_transmit_message(int bt_devices, int wifi_devices, float core_temperature, int sequence_number, int seconds_uptime);
 void nbiot_status();
 
 /**
