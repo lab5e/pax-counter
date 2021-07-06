@@ -10,6 +10,11 @@ MACAddressPool pool(300000); // Age limit: 5 minutes
 #define TRANSMIT_DELAY_MS 1000 * 60 * 5 // Transmit every 5 minutes
 #define BOOT_DELAY_MS 1000 * 60 * 60  // Reboot every hour
 
+extern "C" 
+{
+  uint8_t temprature_sens_read();
+}
+
 void(* resetFunc) (void) = 0;
 
 void setup() 
@@ -35,11 +40,14 @@ void loop()
       pool.Log();
       transmit_time_end  = millis();
       boot_time_end = millis();
+      float core_temperature = (temprature_sens_read() - 32) / 1.8;
+      Serial.print("Core temperature:");
+      Serial.println(core_temperature);
       if (transmit_time_end-transmit_time_start > TRANSMIT_DELAY_MS)
       {
         Serial.println("----- Transmitting -----");
         nbiot_status();
-        nbiot_transmit_message(pool.get_count(BT), pool.get_count(WIFI));
+        nbiot_transmit_message(pool.get_count(BT), pool.get_count(WIFI), core_temperature);
         pool.Purge();
         Serial.println("----- Log purged -----");
         break;

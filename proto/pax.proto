@@ -7,4 +7,6 @@ message PAXMessage {
     uint32 bluetooth_device_count = 1;
     
     uint32 wifi_device_count = 2;
+
+    float core_temperature = 3;
 };

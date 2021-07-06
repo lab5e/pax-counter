@@ -734,11 +734,11 @@ void nbiot_setup()
 constexpr int PROTOBUF_MAX_LENGTH = 256;
 uint8_t proto_buffer[PROTOBUF_MAX_LENGTH];
 
-void nbiot_transmit_message(int bt_devices, int wifi_devices)
+void nbiot_transmit_message(int bt_devices, int wifi_devices, float core_temperature)
 {
     if (nbiot.isConnected()) 
     {
-        int encodedLength = EncodeProtoBuf(bt_devices, wifi_devices, proto_buffer, PROTOBUF_MAX_LENGTH);
+        int encodedLength = EncodeProtoBuf(bt_devices, wifi_devices, core_temperature, proto_buffer, PROTOBUF_MAX_LENGTH);
 
         if (true == nbiot.sendBytes(remoteIP, REMOTE_PORT, (const char*)proto_buffer, encodedLength)) 
         {
