@@ -20,7 +20,7 @@ void(* resetFunc) (void) = 0;
 void setup() 
 {
   wifi_scanner_setup();
-  ble_scanner_setup();
+//  ble_scanner_setup();
   nbiot_setup();
   Serial.begin(115200);
  }
@@ -38,7 +38,9 @@ void loop()
     while (true)
     {
       wifi_scan();
+      ble_scanner_setup();
       ble_scan();
+      ble_scanner_teardown();
       pool.Log();
       transmit_time_end  = millis();
       boot_time_end = millis();
