@@ -16,61 +16,61 @@ class MyAdvertisedDeviceCallbacks: public BLEAdvertisedDeviceCallbacks
     void onResult(BLEAdvertisedDevice advertisedDevice) 
     {
 
-        Serial.printf(advertisedDevice.getAddress().toString().c_str());
-        Serial.printf(" Appearance: %d, ", advertisedDevice.getAppearance());
-        Serial.printf(advertisedDevice.getManufacturerData().c_str());
-        Serial.printf(advertisedDevice.getName().c_str());
-        Serial.printf(", ");
-        Serial.printf("RSSI: %d ,", advertisedDevice.getRSSI());
-        Serial.printf("ServiceData:");
-        if (advertisedDevice.haveServiceData())
-        {
-            Serial.printf(advertisedDevice.getServiceData().c_str());
-        }
-        else
-        {
-            Serial.printf("<empty>");
-        }
-        Serial.printf(", ");
+        // Serial.printf(advertisedDevice.getAddress().toString().c_str());
+        // Serial.printf(" Appearance: %d, ", advertisedDevice.getAppearance());
+        // Serial.printf(advertisedDevice.getManufacturerData().c_str());
+        // Serial.printf(advertisedDevice.getName().c_str());
+        // Serial.printf(", ");
+        // Serial.printf("RSSI: %d ,", advertisedDevice.getRSSI());
+        // Serial.printf("ServiceData:");
+        // if (advertisedDevice.haveServiceData())
+        // {
+        //     Serial.printf(advertisedDevice.getServiceData().c_str());
+        // }
+        // else
+        // {
+        //     Serial.printf("<empty>");
+        // }
+        // Serial.printf(", ");
 
-        Serial.printf("DataUUID:");
+        // Serial.printf("DataUUID:");
 
-        if (advertisedDevice.haveServiceUUID())
-        {
-            Serial.printf(advertisedDevice.getServiceDataUUID().toString().c_str());
-        } else
-        {
-            Serial.printf("<empty>");
-        }
-        Serial.printf(", ");
+        // if (advertisedDevice.haveServiceUUID())
+        // {
+        //     Serial.printf(advertisedDevice.getServiceDataUUID().toString().c_str());
+        // } else
+        // {
+        //     Serial.printf("<empty>");
+        // }
+        // Serial.printf(", ");
 
-        Serial.printf("ServiceUUID:");
+        // Serial.printf("ServiceUUID:");
 
-        if (advertisedDevice.haveServiceUUID())
-        {
-            Serial.printf(advertisedDevice.getServiceUUID().toString().c_str());
-        } else
-        {
-            Serial.printf("<empty>");
-        }
+        // if (advertisedDevice.haveServiceUUID())
+        // {
+        //     Serial.printf(advertisedDevice.getServiceUUID().toString().c_str());
+        // } else
+        // {
+        //     Serial.printf("<empty>");
+        // }
 
-        Serial.printf(", ");
-        Serial.printf("TXPower: %d ,", advertisedDevice.getTXPower());
-        Serial.printf("Payload length: %d, ", advertisedDevice.getPayloadLength());
-        Serial.printf(" Payload: ");
-        for (int i=0; i<advertisedDevice.getPayloadLength(); i++)
-        {
-            Serial.printf("%02X ", advertisedDevice.getPayload()[i]);
-        }
-        Serial.printf(", Address type: ");
+        // Serial.printf(", ");
+        // Serial.printf("TXPower: %d ,", advertisedDevice.getTXPower());
+        // Serial.printf("Payload length: %d, ", advertisedDevice.getPayloadLength());
+        // Serial.printf(" Payload: ");
+        // for (int i=0; i<advertisedDevice.getPayloadLength(); i++)
+        // {
+        //     Serial.printf("%02X ", advertisedDevice.getPayload()[i]);
+        // }
+        // Serial.printf(", Address type: ");
 
-        switch(advertisedDevice.getAddressType())
-        {
-            case 0: Serial.println("PUBLIC"); break;
-            case 1: Serial.println("RANDOM"); break;
-            case 2: Serial.println("RPA PUBLIC"); break;
-            case 3: Serial.println("RPA RANDOM"); break;
-        }
+        // switch(advertisedDevice.getAddressType())
+        // {
+        //     case 0: Serial.println("PUBLIC"); break;
+        //     case 1: Serial.println("RANDOM"); break;
+        //     case 2: Serial.println("RPA PUBLIC"); break;
+        //     case 3: Serial.println("RPA RANDOM"); break;
+        // }
 
         pool.Add(MACSighting(BT, advertisedDevice.getAddress().toString().c_str()));
     }
