@@ -77,6 +77,23 @@ bool TelenorNBIoT::begin(Stream &serial, bool _debug)
     return online() &&
         setNetworkOperator(mcc, mnc) &&
         ensureAccessPointName(apn);
+    // debug = _debug;
+    // if (debug) {
+    //     Serial.println("NB-IoT debug enabled");
+    // }
+    // //Stream &serial
+    // ublox = &serial;
+    // // Increase timeout for the module. It might be slow to respond on certain
+    // // commands.
+    // ublox->setTimeout(DEFAULT_TIMEOUT);
+    // while (!ublox) {}
+    // drain();
+    // setAutoConnect(false);
+    // reboot();
+
+    // return online() &&
+    //     setNetworkOperator(mcc, mnc) &&
+    //     ensureAccessPointName(apn);
 }
 
 bool TelenorNBIoT::enableErrorCodes()
@@ -261,7 +278,7 @@ String TelenorNBIoT::address()
 {
     if (strnlen(_address, sizeof _address) != 15)
     {
-        retry(10, [this]() {
+        retry(30, [this]() {
             writeCommand(CGPADDR);
             if (readCommand(lines) == 2 && isOK(lines[1]))
             {
@@ -274,6 +291,7 @@ String TelenorNBIoT::address()
                     return true;
                 }
             }
+            delay(1000);
             return false;
         });
     }
@@ -718,10 +736,7 @@ void nbiot_setup()
     delay(1000);
   }
 
-  Serial.print("IMSI: ");
-  Serial.println(nbiot.imsi());
-  Serial.print("IMEI: ");
-  Serial.println(nbiot.imei());
+  nbiot_status();
 
   while (!nbiot.createSocket()) {
     Serial.print("Error creating socket. Error code: ");
@@ -748,7 +763,6 @@ void nbiot_transmit_message(int bt_devices, int wifi_devices, float core_tempera
         {
             Serial.println("Failed sending data");
         }
-        delay(30000); // Grace period. Avoid getting booted off the network for misbehaving :)
     } 
     else 
     {

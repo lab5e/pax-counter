@@ -78,6 +78,7 @@ class MyAdvertisedDeviceCallbacks: public BLEAdvertisedDeviceCallbacks
 
 void ble_scanner_setup()
 {
+    Serial.printf("Initializing BT scanner\n");
     BLEDevice::init("PAX");
     pBLEScan = BLEDevice::getScan(); //create new scan
     pBLEScan->setAdvertisedDeviceCallbacks(new MyAdvertisedDeviceCallbacks());

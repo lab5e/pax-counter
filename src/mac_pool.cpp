@@ -48,14 +48,18 @@ int MACAddressPool::get_count(TARGET_T target_type)
 
 void MACAddressPool::Log()
 {
-    Serial.printf("--- DEVICES ---\r\n");
+    int bt = 0;
+    int wifi = 0;
     for (auto it = _address_pool.begin() ; it != _address_pool.end(); ++it)
     {
         if (BT == it->_target_type)
-            Serial.print("BT  : ");
+            bt++;
         else
-            Serial.print("WIFI: ");
-        Serial.printf("%s\r\n", it->_mac.c_str());
+            wifi++;            
+        // Serial.printf("%s\r\n", it->_mac.c_str());
     }
+    Serial.printf("BT count : %d\n", bt);
+    Serial.printf("WIFI count : %d\n", wifi);
+
 }
 

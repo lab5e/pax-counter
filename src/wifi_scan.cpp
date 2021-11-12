@@ -53,6 +53,7 @@ void promiscuous_callback(void* buffer, wifi_promiscuous_pkt_type_t type)
 
 void wifi_scanner_setup() 
 {
+  Serial.printf("Initializing wifi scanner\n");
   wifi_init_config_t cfg = WIFI_INIT_CONFIG_DEFAULT();
   esp_wifi_init(&cfg);
   esp_wifi_set_storage(WIFI_STORAGE_RAM);
